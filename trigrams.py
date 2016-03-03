@@ -1,7 +1,7 @@
 import io
 import string
 import random
-from io import StringIO
+import sys
 
 
 def file_load(input_text):
@@ -19,7 +19,7 @@ def make_dict(tokens):
         key = tuple(token_set[:2])
         value = token_set[-1:]
         if key in text_dict:
-            text_dict[key].append(value)
+            text_dict[key].extend(value)
         else:
             text_dict[key] = value
         i += 1
@@ -32,12 +32,15 @@ def build_output(text_dict, output_length):
     output_list.extend(first)
     words = choose_next(first, text_dict)
     output_list.append(words[1])
-    step = 2
+    step = 3
     while step < output_length:
         words = choose_next(words, text_dict)
         output_list.append(words[1])
-        print(output_list)
         step += 1
+    print(output_list)
+    new_file = open('output.txt', 'w')
+    new_file.write(' '.join(output_list))
+    return output_list
 
 
 def choose_next(current_key, text_dict):
@@ -46,4 +49,10 @@ def choose_next(current_key, text_dict):
     new_tuple = tuple(new_list[-2:])
     return new_tuple
 
-build_output(make_dict(file_load('sherlock_small.txt')), 10)
+
+def main(source_file, num_runs):
+    build_output(make_dict(file_load(source_file)), num_runs)
+
+
+# if __name__ == '__main__':
+#     print(sys.argv)
