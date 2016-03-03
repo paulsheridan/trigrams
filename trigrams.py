@@ -54,5 +54,5 @@ def main(source_file, num_runs):
     build_output(make_dict(file_load(source_file)), num_runs)
 
 
-# if __name__ == '__main__':
-#     print(sys.argv)
+if __name__ == '__main__':
+    main(sys.argv[1], int(sys.argv[2]))
